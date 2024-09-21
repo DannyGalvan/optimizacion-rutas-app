@@ -7,14 +7,11 @@ import {
   Text,
 } from "react-native";
 import { api } from "@/config/axiosConfig";
-import { addStoreData } from "../../services/Storage";
 import { ErrorObject, useForm } from "../../hooks/useForm";
 import { TouchableButton } from "@/components/buttons/TouchableButton";
 import { InputForm } from "@/components/inputs/InputForm";
 import { Logo } from "@/components/icons/Logo";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Response } from "@/interfaces/Resopnse";
-import { Auth } from "@/interfaces/Auth";
 import { Colors, global } from "@/constants/Colors";
 import { authShema } from "@/validations/authValidations";
 import { handleOneLevelZodError } from "@/utils/convert";

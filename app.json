@@ -19,11 +19,6 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      },
-      "config": {
-        "googleMaps": {
-          "apiKey": "AIzaSyDXpDUEBYsQPagnH8poxVZdmswBGkMzL08"
-        }
       }
     },
     "web": {
@@ -37,7 +32,6 @@
     ],
     "experiments": {
       "typedRoutes": true
-    },
-    "android.config.googleMaps.apikey": "AIzaSyDXpDUEBYsQPagnH8poxVZdmswBGkMzL08"
+    }
   }
 }

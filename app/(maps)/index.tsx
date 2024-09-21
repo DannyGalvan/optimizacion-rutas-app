@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { View, StyleSheet, Text, ScrollView } from "react-native";
 import * as Location from "expo-location";
-import MapView, { Marker, PROVIDER_DEFAULT, PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 import Modal from "react-native-modal";
 import { marker } from "@/interfaces/marker";
@@ -11,6 +11,7 @@ import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplet
 import { TouchableButton } from "@/components/buttons/TouchableButton";
 import { Stack } from "expo-router";
 import { LoadingComponent } from "@/components/LoadinigComponent";
+import { GooGleMapsApiKey } from "@/constants";
 
 export default function LocationExampleScreen() {
   const mapViewRef = useRef<MapView>();
@@ -81,7 +82,7 @@ export default function LocationExampleScreen() {
           });
         }}
         query={{
-          key: "AIzaSyDXpDUEBYsQPagnH8poxVZdmswBGkMzL08",
+          key: GooGleMapsApiKey,
           language: "es",
         }}
         GoogleReverseGeocodingQuery={{
@@ -120,7 +121,7 @@ export default function LocationExampleScreen() {
                 description={destinationRoute.description}
               />
               <MapViewDirections
-                apikey={"AIzaSyDXpDUEBYsQPagnH8poxVZdmswBGkMzL08"}
+                apikey={GooGleMapsApiKey}
                 origin={location?.coords}
                 destination={destinationRoute.latlong}
                 strokeColor={Colors.dark.background}

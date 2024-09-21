@@ -1,8 +1,7 @@
 import axios, {InternalAxiosRequestConfig} from 'axios';
-import { Alert } from 'react-native';
 
 export const api = axios.create({
-  baseURL: 'https://spring-boot-app-latest-ekx5.onrender.com/api/v1/',
+  baseURL: 'https://spring-boot-app-r0cf.onrender.com/api/v1/',
 });
 
 api.interceptors.request.use((config: InternalAxiosRequestConfig<any>) => {
