@@ -11,8 +11,17 @@ import "react-native-reanimated";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { AuthProvider } from "@/context/AuthContext";
 import { useAuth } from "@/hooks/useAuth";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 SplashScreen.preventAutoHideAsync();
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 2,
+    },
+  },
+});
 
 const StackLayout = () => {
   const router = useRouter();
@@ -55,8 +64,10 @@ const StackLayout = () => {
 
 export default function RootLayout() {
   return (
-    <AuthProvider>
-      <StackLayout />
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <StackLayout />
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }
