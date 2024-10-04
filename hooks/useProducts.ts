@@ -5,10 +5,11 @@ import React, { useState } from "react";
 
 export const useProducts = () => {
   const [searchKey, setSearchKey] = useState<string | undefined>(undefined);
+  const [classify, setClassify] = useState<number | undefined>(undefined);
 
   const { data, isPending, error } = useQuery({
-    queryKey: [QueryKeys.products, searchKey],
-    queryFn: () => searchProducts({ search: searchKey }),
+    queryKey: [QueryKeys.products, searchKey, classify],
+    queryFn: () => searchProducts({ search: searchKey, classifyId: classify }),
   });
 
   const updateSearchKey = (searchKey: string) => {
@@ -23,5 +24,10 @@ export const useProducts = () => {
     setSearchKey(searchKey);
   }
 
-  return { data, isLoading:isPending, error, updateSearchKey };
+  const updateClassify = (classifyId: number) => {
+
+    setClassify(classifyId);
+  }
+
+  return { data, isLoading:isPending, error, updateSearchKey, updateClassify };
 };

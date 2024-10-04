@@ -6,7 +6,7 @@ import { Icon } from "../icons/Icon";
 
 interface InputSelectProps {
   queryKey: string;
-  queryFn: () => Promise<[]>;
+  queryFn: () => Promise<any []>;
   onSelect: (selectedItem: any, index: number) => void;
 }
 

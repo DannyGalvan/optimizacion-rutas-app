@@ -7,10 +7,11 @@ import { InputSearch } from "@/components/inputs/InputSearch";
 import { appStyles } from "@/styles/appStyles";
 import { InputSelect } from "@/components/inputs/InputSelect";
 import { getAllClassifications } from "@/services/catalogueService";
+import { ProductCard } from "@/components/cards/ProductCard";
 
 export default function HomeScreen() {
   const { loading } = useAuth();
-  const { data, error, isLoading, updateSearchKey } = useProducts();
+  const { data, error, isLoading, updateSearchKey, updateClassify } = useProducts();
 
   if (loading) {
     return <LoadingComponent title="cargando..." />;
@@ -23,7 +24,7 @@ export default function HomeScreen() {
       </Text>
       <InputSelect
         queryKey="classifications"
-        onSelect={(item, index) => console.log({ item, index })}
+        onSelect={(item, index) => updateClassify(item.id)}
         queryFn={getAllClassifications}
       />
       <InputSearch updateFn={updateSearchKey} />
@@ -34,21 +35,7 @@ export default function HomeScreen() {
           data={data}
           refreshing={isLoading}
           onRefresh={() => updateSearchKey("")}
-          renderItem={(item) => {
-            return (
-              <View className="bg-cyan-300 rounded-lg p-3 m-2 border-2 border-gray-600">
-                <View className="flex flex-row justify-between">
-                  <Text className="font-bold text-md">{item.item.name}</Text>
-                  <Image
-                    className="w-20 h-20"
-                    source={{
-                      uri: "https://upload.wikimedia.org/wikipedia/commons/0/0a/No-image-available.png",
-                    }}
-                  />
-                </View>
-              </View>
-            );
-          }}
+          renderItem={(item) => <ProductCard data={item} />}
         />
       </View>
     </View>

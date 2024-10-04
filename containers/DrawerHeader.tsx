@@ -2,16 +2,18 @@
 import { Icon } from "@/components/icons/Icon";
 import { Colors } from "@/constants/Colors";
 import { useAuth } from "@/hooks/useAuth";
+import { useOrderDetails } from "@/hooks/useOrderDetails";
 import {
   DrawerContentComponentProps,
   DrawerContentScrollView,
   DrawerItem,
   DrawerItemList,
 } from "@react-navigation/drawer";
-import { useState } from "react";
+import { useRouter } from "expo-router";
 import { Image, StyleSheet, View } from "react-native";
 
 export const DrawerHeader = (props: DrawerContentComponentProps) => {
+  const router = useRouter();
   const { logout } = useAuth();
 
   return (
@@ -23,6 +25,14 @@ export const DrawerHeader = (props: DrawerContentComponentProps) => {
         />
       </View>
       <DrawerItemList {...props} />
+      <DrawerItem
+        inactiveTintColor={Colors.green}
+        label="Mapa"
+        onPress={()=>router.navigate("(maps)")}
+        icon={({ color, size }) => (
+          <Icon name={"locate"} size={size} color={color} />
+        )}
+      />
       <DrawerItem
         inactiveTintColor={Colors.red}
         label="Cerrar Sesión"

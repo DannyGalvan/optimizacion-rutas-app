@@ -50,8 +50,6 @@ const LoginScreen = ({ navigation }: Props) => {
 
     const respuesta: apiResponse<loginResponse> = await login(form);
   
-    
-
     if (!respuesta.success) {
       setMessage(respuesta.message);
       return respuesta;
@@ -62,8 +60,6 @@ const LoginScreen = ({ navigation }: Props) => {
     }
 
     api.defaults.headers.common.Authorization = `Bearer ${respuesta.data.token}`;
-
-    console.log({respuesta})
 
     signIn({
       token: respuesta.data.token,

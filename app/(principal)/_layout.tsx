@@ -6,9 +6,11 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { DrawerHeader } from "@/containers/DrawerHeader";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "react-native";
+import { useOrderDetails } from "@/hooks/useOrderDetails";
 
 export default function DrawerLayout() {
   const sheme = useColorScheme();
+  const {countProducts} = useOrderDetails();
   
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -17,7 +19,7 @@ export default function DrawerLayout() {
         screenOptions={{
           headerTintColor: sheme == 'dark' ? Colors.white : Colors.black,
         }}
-        initialRouteName="explorer"
+        initialRouteName="index"
       >
         <Drawer.Screen
           name="index"
@@ -25,6 +27,14 @@ export default function DrawerLayout() {
             title: "Optimización Rutas App",
             drawerLabel: "Home",
             drawerIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+          }}
+        />
+        <Drawer.Screen
+          name="cart"
+          options={{
+            title: "Optimización Rutas App",
+            drawerLabel: `Carrito (${countProducts()})`,
+            drawerIcon: ({ color }) => <TabBarIcon name="cart" color={color} />,
           }}
         />
         <Drawer.Screen

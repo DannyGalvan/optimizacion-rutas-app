@@ -3,7 +3,7 @@ import { apiResponse } from "@/types/response/apiResponse";
 
 
 export const getAllClassifications = async () => {
-    const response = await api.get<any, apiResponse<[]>>("/classification/all");
+    const response = await api.get<any, apiResponse<ClassificationResponse []>>("/classification/all");
   
     return response.data;
   };
