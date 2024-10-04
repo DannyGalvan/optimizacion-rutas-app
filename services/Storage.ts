@@ -1,4 +1,4 @@
-import { AuthState } from '@/context/AuthContext';
+import { AuthState } from '@/store/useAuthStore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 

@@ -9,6 +9,9 @@ export const useOrderDetails = () => {
     removeProduct,
     updateProduct,
     clearProducts,
+    substractProduct,
+    isLoading,
+    syncProducts,
   } = useOrderStore();
 
   return {
@@ -19,5 +22,8 @@ export const useOrderDetails = () => {
     removeProduct,
     updateProduct,
     clearProducts,
+    substractProduct,
+    isLoading,
+    syncProducts,
   };
 };

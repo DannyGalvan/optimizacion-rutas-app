@@ -1,9 +1,7 @@
-import { AuthContext } from "@/context/AuthContext";
-import { useContext } from "react";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export const useAuth = () => {
-  const { authState, logout, signIn, loading } = useContext(AuthContext);
-
+  const { authState, logout, signIn, isLoadingAuth, initializeAuth } = useAuthStore();
 
   return {
     isLoggedIn: authState.isLoggedIn,
@@ -12,6 +10,7 @@ export const useAuth = () => {
     token: authState?.token,
     username: authState?.username,
     idUser: authState?.idUser,
-    loading: loading,
+    isLoading: isLoadingAuth,
+    initializeAuth,
   };
 };

@@ -2,7 +2,6 @@
 import { Icon } from "@/components/icons/Icon";
 import { Colors } from "@/constants/Colors";
 import { useAuth } from "@/hooks/useAuth";
-import { useOrderDetails } from "@/hooks/useOrderDetails";
 import {
   DrawerContentComponentProps,
   DrawerContentScrollView,

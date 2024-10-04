@@ -1,6 +1,6 @@
 import { useAuth } from "@/hooks/useAuth";
 import { LoadingComponent } from "@/components/LoadinigComponent";
-import { FlatList, Image, Text, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import { TextStyles } from "@/styles/textStyles";
 import { useProducts } from "@/hooks/useProducts";
 import { InputSearch } from "@/components/inputs/InputSearch";
@@ -10,10 +10,10 @@ import { getAllClassifications } from "@/services/catalogueService";
 import { ProductCard } from "@/components/cards/ProductCard";
 
 export default function HomeScreen() {
-  const { loading } = useAuth();
-  const { data, error, isLoading, updateSearchKey, updateClassify } = useProducts();
+  const { isLoading } = useAuth();
+  const { data, error, isLoading : isLoadingProducts, updateSearchKey, updateClassify } = useProducts();
 
-  if (loading) {
+  if (isLoading) {
     return <LoadingComponent title="cargando..." />;
   }
 
@@ -33,7 +33,7 @@ export default function HomeScreen() {
           scrollEnabled
           className="px-3"
           data={data}
-          refreshing={isLoading}
+          refreshing={isLoadingProducts}
           onRefresh={() => updateSearchKey("")}
           renderItem={(item) => <ProductCard data={item} />}
         />

@@ -23,7 +23,6 @@ import { loginResponse } from "@/types/response/loginResponse";
 import { login } from "@/services/AuthService";
 import { loginRequest } from "@/types/request/loginRequest";
 
-
 const initialForm: loginRequest = {
   email: "",
   password: "",
@@ -41,8 +40,8 @@ const validateForm = (form: loginRequest): ErrorObject => {
 
 interface Props extends NativeStackScreenProps<any, any> {}
 
-const LoginScreen = ({ navigation }: Props) => {
-  const { signIn, loading: isLoading } = useAuth();
+const LoginScreen = ({ }: Props) => {
+  const { signIn, isLoading} = useAuth();
   const [message, setMessage] = useState<string | null>(null);
 
   const authLogin = async (form: loginRequest): Promise<any> => {
@@ -58,8 +57,6 @@ const LoginScreen = ({ navigation }: Props) => {
     if (!("token" in respuesta.data)) {
       return respuesta;
     }
-
-    api.defaults.headers.common.Authorization = `Bearer ${respuesta.data.token}`;
 
     signIn({
       token: respuesta.data.token,

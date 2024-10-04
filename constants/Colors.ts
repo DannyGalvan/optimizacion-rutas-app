@@ -90,10 +90,10 @@ export const global = StyleSheet.create({
     color: Colors.black,
   },
   button: {
-    marginTop: 5,
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'space-around',
     borderRadius: 25,
+    flexDirection: "row"
   },
   textButton: {
     fontWeight: 'bold',
