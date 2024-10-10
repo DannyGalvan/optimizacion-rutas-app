@@ -12,6 +12,7 @@ export const useOrderDetails = () => {
     substractProduct,
     isLoading,
     syncProducts,
+    totalOrder,
   } = useOrderStore();
 
   return {
@@ -25,5 +26,6 @@ export const useOrderDetails = () => {
     substractProduct,
     isLoading,
     syncProducts,
+    totalOrder,
   };
 };

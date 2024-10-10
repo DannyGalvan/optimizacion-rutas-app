@@ -1,10 +1,13 @@
 import { useOrderDetails } from "@/hooks/useOrderDetails";
+import { appColors } from "@/styles/appStyles";
 import {
   Image,
   ListRenderItemInfo,
   Text,
   View,
   TouchableOpacity,
+  StyleSheet,
+  useColorScheme,
 } from "react-native";
 
 interface ProductCardProps {
@@ -12,6 +15,7 @@ interface ProductCardProps {
 }
 
 export const ProductCard = ({ data }: ProductCardProps) => {
+  const colorSheme = useColorScheme();
   const { addProduct, updateProduct, hasProduct } = useOrderDetails();
 
   const handleAddOrUpdateProduct = () => {
@@ -24,6 +28,7 @@ export const ProductCard = ({ data }: ProductCardProps) => {
 
   return (
     <TouchableOpacity
+      style={colorSheme === "dark" ? styles.shadowDark : styles.shadow}
       className="bg-cyan-300 rounded-lg p-3 m-2 border-2 border-gray-600"
       onPress={handleAddOrUpdateProduct}
     >
@@ -39,3 +44,28 @@ export const ProductCard = ({ data }: ProductCardProps) => {
     </TouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  shadowDark: {
+    shadowColor: appColors.white,
+    shadowOffset: {
+      width: 1,
+      height: 5,
+    },
+    shadowOpacity: 0.50,
+    shadowRadius: 6.68,
+
+    elevation: 14,
+  },
+  shadow: {
+    shadowColor: appColors.black,
+    shadowOffset: {
+      width: 1,
+      height: 5,
+    },
+    shadowOpacity: 0.50,
+    shadowRadius: 6.68,
+
+    elevation: 14,
+  },
+});

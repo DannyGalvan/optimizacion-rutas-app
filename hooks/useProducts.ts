@@ -7,7 +7,7 @@ export const useProducts = () => {
   const [searchKey, setSearchKey] = useState<string | undefined>(undefined);
   const [classify, setClassify] = useState<number | undefined>(undefined);
 
-  const { data, isPending, error } = useQuery({
+  const { data, isPending, error, refetch } = useQuery({
     queryKey: [QueryKeys.products, searchKey, classify],
     queryFn: () => searchProducts({ search: searchKey, classifyId: classify }),
   });
@@ -29,5 +29,5 @@ export const useProducts = () => {
     setClassify(classifyId);
   }
 
-  return { data, isLoading:isPending, error, updateSearchKey, updateClassify };
+  return { data, isLoading: isPending, error, updateSearchKey, updateClassify, refetch };
 };

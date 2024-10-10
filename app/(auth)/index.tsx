@@ -5,8 +5,8 @@ import {
   ScrollView,
   ActivityIndicator,
   Text,
+  useColorScheme,
 } from "react-native";
-import { api } from "@/config/axiosConfig";
 import { ErrorObject, useForm } from "../../hooks/useForm";
 import { TouchableButton } from "@/components/buttons/TouchableButton";
 import { InputForm } from "@/components/inputs/InputForm";
@@ -22,6 +22,7 @@ import { apiResponse } from "@/types/response/apiResponse";
 import { loginResponse } from "@/types/response/loginResponse";
 import { login } from "@/services/AuthService";
 import { loginRequest } from "@/types/request/loginRequest";
+import { useRouter } from "expo-router";
 
 const initialForm: loginRequest = {
   email: "",
@@ -43,6 +44,8 @@ interface Props extends NativeStackScreenProps<any, any> {}
 const LoginScreen = ({ }: Props) => {
   const { signIn, isLoading} = useAuth();
   const [message, setMessage] = useState<string | null>(null);
+  const colorSheme = useColorScheme();
+  const {navigate} = useRouter();
 
   const authLogin = async (form: loginRequest): Promise<any> => {
     setMessage(null);
@@ -113,7 +116,14 @@ const LoginScreen = ({ }: Props) => {
           textStyle={global.textDark}
         />
 
-        {loading && <ActivityIndicator size="large" color={Colors.white} />}
+        <TouchableButton
+          styles={styles.buttonContainer}
+          onPress={() => navigate("register")}
+          title="Registrarse"
+          textStyle={global.textDark}
+        />
+
+        {loading && <ActivityIndicator size="large" color={colorSheme == "dark" ? Colors.white : Colors.yellow} />}
         {message && <Text style={global.errorColor}>{message}</Text>}
       </ScrollView>
     </LoginRedirectScreen>

@@ -44,7 +44,7 @@ export const InputForm = ({
         placeholder={placeholder}
         onChangeText={(text) => onChangeText(text, name)}
         value={value}
-        placeholderTextColor={placeholderTextColor ?? Colors.opacity}
+        placeholderTextColor={placeholderTextColor ? placeholderTextColor : sheme == 'dark' ? Colors.white : Colors.black}
         secureTextEntry={secureTextEntry}
         onFocus={onFocus}
         multiline={multiline}

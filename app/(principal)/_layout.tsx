@@ -38,13 +38,11 @@ export default function DrawerLayout() {
           }}
         />
         <Drawer.Screen
-          name="explorer"
+          name="checkIn"
           options={{
             title: "Optimización Rutas App",
-            drawerLabel: "Explorer",
-            drawerIcon: ({ color }) => (
-              <TabBarIcon name="compass" color={color} />
-            ),
+            drawerLabel: "checkIn",
+            drawerIcon: ({ color }) => <TabBarIcon name="list-sharp" color={color} />,
           }}
         />
       </Drawer>

@@ -3,10 +3,12 @@ import { Icon } from "@/components/icons/Icon";
 import { LoadingComponent } from "@/components/LoadinigComponent";
 import { Colors } from "@/constants/Colors";
 import { useOrderDetails } from "@/hooks/useOrderDetails";
+import { useRouter } from "expo-router";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 
 export default function CartScreen() {
-  const { products, clearProducts, removeProduct, updateProduct, substractProduct, isLoading } = useOrderDetails();
+  const {navigate} = useRouter();
+  const { products, clearProducts, removeProduct, updateProduct, substractProduct, isLoading, totalOrder } = useOrderDetails();
   return (
     <View className="flex-1 p-12">
       {
@@ -43,6 +45,15 @@ export default function CartScreen() {
         />
         )
       }
+      <Text className="text-black dark:text-white font-bold text-lg">Total a Pagar Q.{totalOrder().toFixed(2)}</Text>
+      <View className="flex items-center">
+        <TouchableButton
+          textClassName="text-xl font-bold text-white"
+          className="rounded-xl" styles={styles.checkInButton}
+          icon="list-sharp"
+          iconColor="white"
+          title="CheckIn" onPress={()=>navigate("checkIn")} />
+      </View>
       <View className="flex items-center">
         <TouchableButton
           textClassName="text-xl font-bold text-white"
@@ -58,6 +69,13 @@ export default function CartScreen() {
 const styles = StyleSheet.create({
   button: {
     backgroundColor: Colors.red,
+    padding: 10,
+    borderRadius: 5,
+    margin: 10,
+    width: "75%",
+  },
+  checkInButton: {
+    backgroundColor: Colors.green,
     padding: 10,
     borderRadius: 5,
     margin: 10,

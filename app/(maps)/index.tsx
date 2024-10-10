@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, StyleSheet, Text, ScrollView } from "react-native";
+import { View, StyleSheet, Text, ScrollView, PermissionsAndroid } from "react-native";
 import * as Location from "expo-location";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
@@ -12,34 +12,15 @@ import { TouchableButton } from "@/components/buttons/TouchableButton";
 import { Stack } from "expo-router";
 import { LoadingComponent } from "@/components/LoadinigComponent";
 import { GooGleMapsApiKey } from "@/constants";
+import { useLocation } from "@/hooks/useLocation";
 
 export default function LocationExampleScreen() {
   const mapViewRef = useRef<MapView>();
   const follow = useRef<boolean>(true);
-  const [location, setLocation] = useState<Location.LocationObject | null>(
-    null
-  );
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const [load, setLoad] = useState(true);
-  const [isError, setIsError] = useState(false);
   const [open, setOpen] = useState(false);
   const [destinationRoute, setDestinationRoute] = useState<marker | null>(null);
   const [distance, setDistance] = useState<distance | null>(null);
-
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-        return;
-      }
-
-      let location = await Location.getCurrentPositionAsync({});
-
-      setLocation(location);
-      setLoad(false);
-    })();
-  }, []);
+  const {errorMsg, isError, load, location, setIsError} = useLocation();
 
   return (
     <View style={styles.container}>
@@ -71,15 +52,7 @@ export default function LocationExampleScreen() {
             title: GooglePlaceDetail?.name,
             description: GooglePlaceDetail?.formatted_address,
           });
-          setOpen(true);
-          console.log({
-            latlong: {
-              latitude: GooglePlaceDetail?.geometry.location.lat ?? 0,
-              longitude: GooglePlaceDetail?.geometry.location.lng ?? 0,
-            },
-            title: GooglePlaceDetail?.name,
-            description: GooglePlaceDetail?.formatted_address,
-          });
+          setOpen(true);          
         }}
         query={{
           key: GooGleMapsApiKey,
@@ -132,14 +105,9 @@ export default function LocationExampleScreen() {
                     tiempo: data.duration,
                   };
                   setDistance(distance);
-                  console.log({ distance });
-                }}
-                onStart={(data) => {
-                  console.log({ data });
                 }}
                 resetOnChange={true}
-                optimizeWaypoints={true}
-                
+                optimizeWaypoints={true}                
               />
             </>
           )}

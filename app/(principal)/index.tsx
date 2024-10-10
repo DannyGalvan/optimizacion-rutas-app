@@ -11,14 +11,14 @@ import { ProductCard } from "@/components/cards/ProductCard";
 
 export default function HomeScreen() {
   const { isLoading } = useAuth();
-  const { data, error, isLoading : isLoadingProducts, updateSearchKey, updateClassify } = useProducts();
+  const { data, error, isLoading : isLoadingProducts, updateSearchKey, updateClassify, refetch } = useProducts();
 
   if (isLoading) {
     return <LoadingComponent title="cargando..." />;
   }
 
   return (
-    <View style={appStyles.screen}>
+    <View className="flex-1 bg-white dark:bg-black">
       <Text className={TextStyles.title} style={appStyles.textCenter}>
         Productos
       </Text>
@@ -34,7 +34,7 @@ export default function HomeScreen() {
           className="px-3"
           data={data}
           refreshing={isLoadingProducts}
-          onRefresh={() => updateSearchKey("")}
+          onRefresh={() => refetch()}
           renderItem={(item) => <ProductCard data={item} />}
         />
       </View>

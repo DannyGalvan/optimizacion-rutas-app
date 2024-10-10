@@ -13,6 +13,7 @@ interface OrderState {
   removeProduct: (id: string) => void;
   hasProduct: (id: number) => boolean;
   countProducts: () => number;
+  totalOrder: () => number;
   clearProducts: () => void;
 }
 
@@ -22,11 +23,11 @@ export const useOrderStore = create<OrderState>((set, get) => ({
   products: [],
   isLoading: false,
   syncProducts: async () => {
-    set({ isLoading : true });
+    set({ isLoading: true });
     const products = await getStoreData<OrderProducts[]>(PRODUCTS_KEY);
     set({ products: products ?? [] });
     console.log("Productos sincronizados");
-    set({ isLoading : false });
+    set({ isLoading: false });
   },
   addProduct: (product) => {
     const newProduct: OrderProducts = {
@@ -83,6 +84,12 @@ export const useOrderStore = create<OrderState>((set, get) => ({
   },
   countProducts: () => {
     return get().products.reduce((acc, p) => acc + p.quantity, 0);
+  },
+  totalOrder: () => {
+    return get().products.reduce(
+      (acc, p) => acc + p.quantity * p.product.price,
+      0
+    );
   },
   clearProducts() {
     set({ products: [] });

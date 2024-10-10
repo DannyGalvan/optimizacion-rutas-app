@@ -41,10 +41,11 @@ export const useForm = <T>(
       try {
         const response = await peticion(form);
 
-        if (response.exito) {
-          
+        if (response.successful || response.success) {
           setForm(initialForm);
-        }
+        } else (
+          setErrors(response.errors)
+        )
 
         setResponse(response);
 

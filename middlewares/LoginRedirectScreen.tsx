@@ -11,7 +11,6 @@ const LoginRedirectScreen = ({ children }: LoginRedirectScreenProps) => {
 
   if (isLoggedIn) {
     if (segments[0] === "(auth)") {
-      console.log("redirecting to principal");
       return <Redirect href={"(principal)"}/>;
     }
   }

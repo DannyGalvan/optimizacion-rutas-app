@@ -77,6 +77,10 @@ export const global = StyleSheet.create({
     color: Colors.red,
     fontWeight: 'bold',
   },
+  successColor: {
+    color: Colors.green,
+    fontWeight: 'bold',
+  },
   inputDark: {
     height: 40,
     borderBottomWidth: 2,

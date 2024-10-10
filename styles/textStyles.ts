@@ -1,5 +1,5 @@
 
 
 export const TextStyles = {
-    title: "text-center font-bold text-3xl",
+    title: "text-center font-bold text-2xl",
 }
