@@ -11,6 +11,8 @@ export const useAuth = () => {
     username: authState?.username,
     idUser: authState?.idUser,
     isLoading: isLoadingAuth,
+    email: authState?.email,
     initializeAuth,
+    role: authState?.role,
   };
 };

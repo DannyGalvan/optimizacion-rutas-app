@@ -65,6 +65,8 @@ const LoginScreen = ({ }: Props) => {
       token: respuesta.data.token,
       username: respuesta.data.alias,
       idUser: respuesta.data.id,
+      email: respuesta.data.email,
+      role: respuesta.data.role,
     });
 
     return respuesta;

@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import { View, StyleSheet, Text, ScrollView, PermissionsAndroid } from "react-native";
-import * as Location from "expo-location";
+import React, { useState, useRef } from "react";
+import { View, StyleSheet, Text, ScrollView} from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 import Modal from "react-native-modal";

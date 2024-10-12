@@ -13,7 +13,7 @@ import { Image, StyleSheet, View } from "react-native";
 
 export const DrawerHeader = (props: DrawerContentComponentProps) => {
   const router = useRouter();
-  const { logout } = useAuth();
+  const { logout, role } = useAuth();
 
   return (
     <DrawerContentScrollView {...props}>
@@ -23,15 +23,39 @@ export const DrawerHeader = (props: DrawerContentComponentProps) => {
           source={require("@/assets/images/logo_app.png")}
         />
       </View>
-      <DrawerItemList {...props} />
+      {
+        role === 2 && (<DrawerItemList descriptors={props.descriptors} navigation={props.navigation} state={props.state} />)
+      }
+       {
+        role === 1 && (
+          <>
+            <DrawerItem
+              inactiveTintColor={Colors.green}
+              label="Home"
+              onPress={() => router.navigate("(principal)/home")}
+              icon={({ color, size }) => (
+                <Icon name={"home"} size={size} color={color} />
+              )}
+            />
+            <DrawerItem
+              inactiveTintColor={Colors.green}
+              label="Rutas"
+              onPress={() => router.navigate("(maps)/routes")}
+              icon={({ color, size }) => (
+                <Icon name={"location"} size={size} color={color} />
+              )}
+            />            
+          </>
+        )
+      }
       <DrawerItem
         inactiveTintColor={Colors.green}
         label="Mapa"
-        onPress={()=>router.navigate("(maps)")}
+        onPress={() => router.navigate("(maps)")}
         icon={({ color, size }) => (
           <Icon name={"locate"} size={size} color={color} />
         )}
-      />
+      />     
       <DrawerItem
         inactiveTintColor={Colors.red}
         label="Cerrar Sesión"

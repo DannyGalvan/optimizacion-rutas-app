@@ -7,6 +7,8 @@ export interface AuthState {
     username?: string;
     token: string;
     idUser: number;
+    email: string;
+    role: number;
 }
 
 export const InitialAuthState: AuthState = {
@@ -14,12 +16,16 @@ export const InitialAuthState: AuthState = {
     username: undefined,
     token: "",
     idUser: 0,
+    email: "",
+    role: 0,
 }
 
 export interface SignIn {
     username: string;
     token: string;
     idUser: number;
+    email: string;
+    role: number;
 }
 
 interface AuthStoreState {

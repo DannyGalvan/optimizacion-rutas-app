@@ -11,7 +11,7 @@ import { ProductCard } from "@/components/cards/ProductCard";
 
 export default function HomeScreen() {
   const { isLoading } = useAuth();
-  const { data, error, isLoading : isLoadingProducts, updateSearchKey, updateClassify, refetch } = useProducts();
+  const { data, isLoading : isLoadingProducts, updateSearchKey, updateClassify, refetch } = useProducts();
 
   if (isLoading) {
     return <LoadingComponent title="cargando..." />;
@@ -23,9 +23,12 @@ export default function HomeScreen() {
         Productos
       </Text>
       <InputSelect
+        entity="clasificación"
         queryKey="classifications"
-        onSelect={(item, index) => updateClassify(item.id)}
+        textInput="Seleccione"
+        onSelect={(item) => updateClassify(item.id)}
         queryFn={getAllClassifications}
+        selector={(data) => data.name}
       />
       <InputSearch updateFn={updateSearchKey} />
       <View className="h-[600] my-5 mx-3">

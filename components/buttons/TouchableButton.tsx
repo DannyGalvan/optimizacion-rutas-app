@@ -21,6 +21,7 @@ interface Props {
   iconColor?: string;
   icon?: IconProps<ComponentProps<typeof Ionicons>['name']>['name'];
   iconSize?: number;
+  disabled?: boolean;
 }
 
 export const TouchableButton = ({
@@ -33,6 +34,7 @@ export const TouchableButton = ({
   className,
   textClassName,
   iconSize,
+  disabled,
 }: Props) => {
   return (
     <TouchableOpacity
@@ -40,6 +42,7 @@ export const TouchableButton = ({
       className={className}
       onPress={onPress}
       accessibilityLabel={title}
+      disabled={disabled}
     >
       <Text className={textClassName} style={textStyle}>
         {title}        

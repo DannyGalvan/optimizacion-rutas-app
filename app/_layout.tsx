@@ -11,7 +11,6 @@ import "react-native-reanimated";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { useAuth } from "@/hooks/useAuth";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useProducts } from "@/hooks/useProducts";
 import { useOrderStore } from "@/store/useOrderStore";
 
 SplashScreen.preventAutoHideAsync();
@@ -27,7 +26,7 @@ const queryClient = new QueryClient({
 const StackLayout = () => {
   const router = useRouter();
   const colorScheme = useColorScheme();
-  const { isLoggedIn, initializeAuth } = useAuth();
+  const { isLoggedIn, initializeAuth, role } = useAuth();
   const { syncProducts } = useOrderStore();
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
@@ -46,7 +45,7 @@ const StackLayout = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      router.replace("(principal)");
+      role == 1 ? router.replace("(principal)/home") : router.replace("(principal)");
     } else {
       router.replace("(auth)");
     }

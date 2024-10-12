@@ -41,8 +41,16 @@ export default function DrawerLayout() {
           name="checkIn"
           options={{
             title: "Optimización Rutas App",
-            drawerLabel: "checkIn",
+            drawerLabel: "CheckIn",
             drawerIcon: ({ color }) => <TabBarIcon name="list-sharp" color={color} />,
+          }}
+        />
+        <Drawer.Screen
+          name="home"
+          options={{
+            title: "Optimización Rutas App",
+            drawerLabel: "Home",
+            drawerIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
           }}
         />
       </Drawer>

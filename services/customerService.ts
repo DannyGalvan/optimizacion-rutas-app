@@ -9,8 +9,12 @@ export const registerCustomer = async (customer: customerRequest): Promise<apiRe
     return response;
 }
 
-export const getAddresses = async (customerId: number): Promise<apiResponse<string[]>> => {
-    const response = await api.get<object, apiResponse<string[]>>(`/customer/addresses/${customerId}`);
+export const getAddresses = async (customerId: number): Promise<AddressResponse[]> => {
+    try {
+        const response = await api.get<object, apiResponse<AddressResponse[]>>(`/customer/addresses/${customerId}`);
 
-    return response;
+        return response.data ?? [];
+    } catch (error) {
+        return [];
+    }
 }
