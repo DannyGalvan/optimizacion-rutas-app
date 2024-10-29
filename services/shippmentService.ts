@@ -7,5 +7,9 @@ export const createShippment = async () => {
 };
 
 export const getShippment = async () => {
-    return api.get<object, Shipment[]>('/shipments/getShipments');
+    const response = await api.get<object, Shipment[]>('/shipments/getShipments');
+
+    console.log(response);
+
+    return response;
 };

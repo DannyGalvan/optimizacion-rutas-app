@@ -5,6 +5,8 @@ import SelectDropdown from "react-native-select-dropdown";
 import { Icon } from "../icons/Icon";
 import { useCountStore } from "@/store/useCountStore";
 import { set } from "zod";
+import { TouchableButton } from "../buttons/TouchableButton";
+import { appColors } from "@/styles/appStyles";
 
 interface InputSelectProps<T> {
   queryKey: string;
@@ -25,7 +27,7 @@ export const InputSelect = <T extends object>({
 }: InputSelectProps<T>) => {
   const {setCount} = useCountStore();
 
-  const { isPending, data } = useQuery({
+  const { isPending, data, refetch } = useQuery({
     queryKey: [queryKey],
     queryFn: queryFn,
     staleTime: 0,
@@ -36,7 +38,7 @@ export const InputSelect = <T extends object>({
   }, [data]);
 
   return (
-    <View className="flex flex-row justify-center">
+    <View className="flex flex-row justify-center px-4">
       {
         !isPending && (<SelectDropdown
           searchInputStyle={{ width: "100%" }}
@@ -81,6 +83,7 @@ export const InputSelect = <T extends object>({
           searchPlaceHolder={`Buscar ${entity}`}
         />) 
       }
+      <TouchableButton iconColor={appColors.white} styles={styles.refreshButton} icon="refresh" title="" onPress={refetch} />
     </View>
   );
 };
@@ -132,4 +135,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     marginRight: 8,
   },
+  refreshButton: {
+    backgroundColor: appColors.primary,
+  }
 });

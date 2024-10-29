@@ -21,15 +21,21 @@ export const generateColor = () => {
 }
 
 export const convertToMarker = (data: Shipment[]) => {
+
+
+  if (data[0].customer == null ) {
+    return [];
+  }
+
   const pilotRoutes: PilotRoutes[] = data.map((shipment) => {
     return {
-      name: shipment.vehicle.driver.name,
+      name: shipment?.vehicle?.driver?.name ?? "Sin Datos",
       color: generateColor(),
       coordinates: [
         {
           latlong: { ...initialRoute },
         },
-        ...shipment.warehouses.map((w) => {
+        ...shipment.warehouses?.map((w) => {
           return {
             latlong: {
               latitude: parseFloat(w.latitude),
@@ -39,8 +45,8 @@ export const convertToMarker = (data: Shipment[]) => {
         }),
         {
           latlong: {
-            latitude: parseFloat(shipment.customer.latitude),
-            longitude: parseFloat(shipment.customer.longitude),
+            latitude: shipment.customer != null ? parseFloat(shipment.customer.latitude) : 0,
+            longitude: shipment.customer != null ? parseFloat(shipment.customer.longitude) : 0,
           },
         },
       ],

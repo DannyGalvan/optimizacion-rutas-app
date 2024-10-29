@@ -3,7 +3,7 @@ import { GooGleMapsApiKey, initialRoute } from "@/constants";
 import { Colors, global } from "@/constants/Colors";
 import { createShippment, getShippment } from "@/services/shippmentService";
 import { PilotRoutes } from "@/types/response/pilotRoutes";
-import { convertToMarker, generateColor } from "@/utils/convert";
+import { convertToMarker } from "@/utils/convert";
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useRef, useState } from "react";
 import { ActivityIndicator, FlatList, StyleSheet, Text, View } from "react-native";
@@ -105,18 +105,18 @@ export default function RoutesScreen() {
 
         const { item: shipment } = item;
 
-        return (<View className="bg-gray-600 p-2 rounded-lg">
-          <Text className="text-lg text-black dark:text-white">Cliente: {shipment.customer.name}</Text>
-          <Text className="text-lg text-black dark:text-white">Direccion: {shipment.customer.addressName}</Text>
-          <Text className="text-lg text-black dark:text-white">Telefono: {shipment.customer.phone}</Text>
-          <Text className="text-lg text-black dark:text-white">Total: Q.{shipment.order.total}</Text>
-          <Text className="text-lg text-black dark:text-white">Vehiculo: {shipment.vehicle.plateNumber}</Text>
-          <Text className="text-lg text-black dark:text-white">Conductor: {shipment.vehicle.driver.name}</Text>
+        return shipment.customer != null ? (<View className="bg-gray-600 p-2 rounded-lg">
+          <Text className="text-lg text-black dark:text-white">Cliente: {shipment?.customer?.name}</Text>
+          <Text className="text-lg text-black dark:text-white">Direccion: {shipment?.customer?.addressName}</Text>
+          <Text className="text-lg text-black dark:text-white">Telefono: {shipment?.customer?.phone}</Text>
+          <Text className="text-lg text-black dark:text-white">Total: Q.{shipment?.order?.total}</Text>
+          <Text className="text-lg text-black dark:text-white">Vehiculo: {shipment?.vehicle?.plateNumber}</Text>
+          <Text className="text-lg text-black dark:text-white">Conductor: {shipment?.vehicle?.driver?.name ?? "Sin Datos"}</Text>
           <Text className="text-lg text-black dark:text-white">Costo de transporte: Q.{shipment.deliveryTransportationCost}</Text>
           <Text className="text-lg text-black dark:text-white">Costo de recoleccion: Q.{shipment.totalWarehousePickupCost}</Text>
-          <Text className="text-lg text-black dark:text-white">Almacenes: {shipment.warehouses.map((w) => w.addressName).join(", ")}</Text>
-          <Text className="text-lg text-black dark:text-white">Gran Total: Q.{shipment.totalWarehousePickupCost + shipment.deliveryTransportationCost + shipment.order.total}</Text>
-        </View>)
+          <Text className="text-lg text-black dark:text-white">Almacenes: {shipment?.warehouses?.map((w) => w.addressName)?.join(", ")}</Text>
+          <Text className="text-lg text-black dark:text-white">Gran Total: Q.{shipment.totalWarehousePickupCost + shipment.deliveryTransportationCost + (shipment?.order?.total ?? 0)}</Text>
+        </View>) : <Text>{shipment.message}</Text>
       }} />
     </View>
   );

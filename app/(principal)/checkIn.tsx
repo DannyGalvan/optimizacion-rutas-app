@@ -1,6 +1,7 @@
 import { TouchableButton } from "@/components/buttons/TouchableButton";
 import { InputForm } from "@/components/inputs/InputForm";
 import { InputSelect } from "@/components/inputs/InputSelect";
+import { GooGleMapsApiKey } from "@/constants";
 import { Colors, global } from "@/constants/Colors";
 import { useAuth } from "@/hooks/useAuth";
 import { useForm } from "@/hooks/useForm";
@@ -11,8 +12,10 @@ import { useCountStore } from "@/store/useCountStore";
 import { useOrderStore } from "@/store/useOrderStore";
 import { appStyles } from "@/styles/appStyles";
 import { OrderDetailRequest } from "@/types/request/orderRequest";
+import { LocationObject } from "expo-location";
 import { useRef, useState } from "react";
 import { ActivityIndicator, Alert, StyleSheet, Text, useColorScheme, View } from "react-native";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 
 export interface OrderForm {
@@ -43,18 +46,24 @@ const validateForm = (form: OrderForm) => {
     return errors;
 };
 
+interface latlong {
+    latitude: number;
+    longitude: number;
+}
+
 export default function CheckInScreen() {
     const mapViewRef = useRef<MapView>();
     const colorSheme = useColorScheme();
     const { idUser, username, email } = useAuth();
     const { products, totalOrder, clearProducts } = useOrderStore();
     const { load, location } = useLocation();
+    const [newLocation, setNewLocation] = useState<latlong | null>(null);
     const {count} = useCountStore();
     const [visible, setVisible] = useState(false);
 
     const handleCreateOrder = async (form: OrderForm) => {
-        form.latitude = location!.coords.latitude;
-        form.longitude = location!.coords.longitude;
+        form.latitude = newLocation === null ? location!.coords.latitude : newLocation.latitude;
+        form.longitude = newLocation === null ? location!.coords.longitude : newLocation.longitude;
         form.customerId = idUser;
         form.total = totalOrder();
         form.orderDetails = products.map((product) => ({
@@ -88,8 +97,39 @@ export default function CheckInScreen() {
             </Text>
             <Text className="text-black dark:text-white font-bold text-lg">Comprador: {username}</Text>
             <Text className="text-black dark:text-white font-bold text-lg mb-2">Correo: {email}</Text>
+            <GooglePlacesAutocomplete
+        styles={{
+          container: {
+            position: "absolute",
+            zIndex: 1,
+            top: 10,
+            left: 20,
+            width: "100%",
+          },
+        }}
+        minLength={3}
+        onFail={(err) => console.error(err)}
+        placeholder="Search..."
+        onPress={(data, GooglePlaceDetail) => {
+            handleChange(GooglePlaceDetail?.formatted_address ?? "", "name");
+            setNewLocation({
+                latitude: GooglePlaceDetail?.geometry.location.lat ?? 0,
+                longitude: GooglePlaceDetail?.geometry.location.lng ?? 0,
+            });
+            setVisible(false);
+        }}
+        query={{
+          key: GooGleMapsApiKey,
+          language: "es",
+        }}
+        GoogleReverseGeocodingQuery={{
+          language: "es",
+          region: "gt",
+        }}
+        fetchDetails={true}
+      />
             <InputSelect
-                entity="Direcciones de envio"
+                entity="Direcciones"
                 textInput={count !== 0 ? "Seleccione" : "No hay registradas"}
                 queryKey="deliveryAddress"
                 onSelect={(item) => handleChange(item.name, "name")}
@@ -139,18 +179,17 @@ export default function CheckInScreen() {
                 <MapView
                     ref={(el) => (mapViewRef.current = el!)}
                     style={styles.map}
-                    showsUserLocation
                     initialRegion={{
-                        latitude: location!.coords.latitude,
-                        longitude: location!.coords.longitude,
+                        latitude: newLocation === null ? location!.coords.latitude : newLocation.latitude,
+                        longitude: newLocation === null ? location!.coords.longitude : newLocation.longitude,
                         latitudeDelta: 0.0922,
                         longitudeDelta: 0.0421,
-                    }}
-                    provider={PROVIDER_GOOGLE}
-                    showsMyLocationButton
+                    }}                                        
+                    provider={PROVIDER_GOOGLE}                 
+                    
                 >
                     <Marker
-                        coordinate={location?.coords!}
+                        coordinate={newLocation === null ? location?.coords! : newLocation}
                         title={"Esta es tu ubicacion"}
                         description={"ahora te encuentras en este punto del mapa"}
                     />
